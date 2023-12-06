@@ -2,30 +2,31 @@ from turtle import Turtle
 import random
 COLORS = ["red", "orange", "yellow", "green", "blue", "purple"]
 STARTING_MOVE_DISTANCE = 5
-MOVE_INCREMENT = 30
-y_place = random.randint(-230,250)
+MOVE_INCREMENT = 10
 
-class CarManager(Turtle):
-    cars = []
-    # STARTING_MOVE_DISTANCE = 5
-    # MOVE_INCREMENT = 30 
+
+class CarManager():
 
     def __init__(self):
-        super().__init__()
-        self.penup()
-        self.shape("square")
-        self.color(random.choice(COLORS))
-        self.shapesize(stretch_wid=20/20, stretch_len=40/20)
-        y_place = random.randint(-230, 250)
-        self.goto(270,y_place)
-        self.setheading(180)
+        self.all_cars = []
         self.car_speed = STARTING_MOVE_DISTANCE
-        self.move_increment = MOVE_INCREMENT
-
-        CarManager.cars.append(self)
+    
+    def create_car(self):
+        random_chance = random.randint(1,6)
+        if random_chance == 1:
+            new_car = Turtle("square")
+            new_car.penup()
+            new_car.color(random.choice(COLORS))
+            new_car.shapesize(stretch_wid=20/20, stretch_len=40/20)
+            y_place = random.randint(-230, 250)
+            new_car.goto(270,y_place)
+            self.all_cars.append(new_car)
+            new_car.setheading(180)
+    
 
     def car_move(self):
-        self.forward(self.car_speed)
+        for car in self.all_cars:
+            car.forward(self.car_speed)
 
 
     def car_remove(self):
@@ -35,5 +36,7 @@ class CarManager(Turtle):
             self.hideturtle()
     
     def car_speed_up(self):
-        self.car_speed += self.move_increment
-        
+        self.car_speed += MOVE_INCREMENT
+    
+
+    
